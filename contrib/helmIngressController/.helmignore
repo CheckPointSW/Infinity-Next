@@ -1,0 +1,6 @@
+# comment
+.git
+*.png
+*/temp*
+*/*/temp*
+temp?

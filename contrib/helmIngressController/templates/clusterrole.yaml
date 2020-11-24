@@ -1,0 +1,97 @@
+# This defines the ClusterRoles needed for the app within the namespace
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nginx-ingress
+  annotations:
+    agentVersion: {{ .Chart.Version }}
+  labels:
+    app.kubernetes.io/name: nginx-ingress
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - "extensions"
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+- apiGroups:
+  - k8s.nginx.org
+  resources:
+  - virtualservers
+  - virtualserverroutes
+  - globalconfigurations
+  - transportservers
+  - policies
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingressclasses
+  verbs:
+  - get
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: nginx-ingress
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: {{.Release.Namespace}}
+roleRef:
+  kind: ClusterRole
+  name: nginx-ingress
+  apiGroup: rbac.authorization.k8s.io
