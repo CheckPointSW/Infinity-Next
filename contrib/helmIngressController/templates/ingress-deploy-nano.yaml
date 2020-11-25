@@ -25,6 +25,7 @@ spec:
       labels:
         app: nginx-ingress
     spec:
+      serviceAccountName: nginx-ingress-waap-sa
       containers:
       - args:
         - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
