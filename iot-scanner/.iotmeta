@@ -1,0 +1,7 @@
+deviceType=Vacuum
+vendor=Example vendor
+deviceModel=T-1000
+version=1.1-rc1
+tags=custom_tag1,custom_tag2
+deleteFwAfterScan=False
+disclaimer=False
