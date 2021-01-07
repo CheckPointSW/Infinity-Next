@@ -8,6 +8,7 @@ The repository contains:
 ## Related Products and Solutions
 * Infinity Next
 * CloudGuard
+* IoT Firmware Scanner
 
 ## References
 * Infinity Portal is available at https://portal.checkpoint.com
