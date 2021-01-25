@@ -1,0 +1,8 @@
+Thank you for installing Check Point CloudGuard AppSec
+
+Login to the CloudGuard portal: https://portal.checkpoint.com
+
+Application URL: {{.Values.appURL}}
+
+Namespace: {{.Release.Namespace}}
+

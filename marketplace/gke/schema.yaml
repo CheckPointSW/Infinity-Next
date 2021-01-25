@@ -1,0 +1,130 @@
+x-google-marketplace:
+  # MUST be v2.
+  schemaVersion: v2
+
+  # MUST match the version of the Application custom resource object.
+  # This is the same as the top level applicationApiVersion field in v1.
+  applicationApiVersion: v1beta1
+
+  # The release version is required in the schema and MUST match the
+  # release tag on the the deployer.
+  publishedVersion: '0.1.143785'
+  publishedVersionMetadata:
+    releaseNote: >-
+      Initial release.
+    # releaseTypes list is optional.
+    # "Security" should only be used if this is an important update to patch
+    # an existing vulnerability, as such updates will display more prominently for users.
+    releaseTypes:
+    - Feature
+    - BugFix
+    - Security
+    # If "recommended" is "true", users using older releases are encouraged
+    # to update as soon as possible. This is useful if, for example, this release
+    # fixes a critical issue.
+    recommended: true
+
+  # Image declaration is required here. Refer to the Images section below.
+  images:
+    images.cpappsecnginxingress.repository:
+      type: REPO_WITH_REGISTRY
+    images.cpappsecnginxingress.tag:
+      type: TAG
+    images.cpappsecnanoagent.repository:
+      type: REPO_WITH_REGISTRY
+    images.cpappsecnanoagent.tag:
+      type: TAG
+  # Other fields, like clusterConstraints, can be included here.
+
+# The Properties and Required sections of v2 are structured the same as those of v1.
+properties:
+  name:
+    type: string
+    x-google-marketplace:
+      type: NAME
+  namespace:
+    type: string
+    x-google-marketplace:
+      type: NAMESPACE
+  operatorServiceAccount:
+    type: string
+    x-google-marketplace:
+      type: SERVICE_ACCOUNT
+      serviceAccount:
+        description: >
+          Monitors cluster-wide app dependencies (such as x and y),
+          managing CoreOS application instances and their etcdclusters.
+        roles:
+        - type: ClusterRole        # This is a cluster-wide ClusterRole
+          rulesType: CUSTOM
+          rules:
+            - apiGroups:
+              - k8s.nginx.org
+              resources:
+                - policies
+                - transportservers
+                - virtualservers
+                - virtualserverroutes
+              verbs:
+                - list
+            - apiGroups:
+              - ""
+              resources:
+                - pods
+                - services
+                - configmaps
+                - secrets
+                - serviceaccounts
+                - events
+                - endpoints
+                - namespaces
+              verbs:
+                - '*'
+            - apiGroups:
+              - apps
+              resources:
+                - deployments
+                - daemonsets
+              verbs:
+                - '*'
+            - apiGroups:
+              - extensions
+              resources:
+                - deployments
+                - daemonsets
+                - ingresses
+              verbs:
+                - '*'
+  certificate:
+    type: string
+    x-google-marketplace:
+      type: TLS_CERTIFICATE
+      tlsCertificate:
+        generatedProperties:
+          base64EncodedPrivateKey: TLS_CERTIFICATE_KEY
+          base64EncodedCertificate: TLS_CERTIFICATE_CRT
+  nanoToken:
+    type: string
+    default: "15741c8e-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d649f781"
+    description: "Insert your token from CloudGuard AppSec Portal App Token here"
+  appURL:
+    type: string
+    default: "myapp.mycompany.com"
+    description: "Your Application URL"
+  mysvcname:
+    type: string
+    default: "myapp"
+    description: "Your applicaiton service name"
+  mysvcport:
+    type: string
+    default: "8080"
+    description: "The service port your application is listening on"
+    
+required:
+- name
+- namespace
+- nanoToken
+- appURL
+- mysvcname
+- mysvcport
+

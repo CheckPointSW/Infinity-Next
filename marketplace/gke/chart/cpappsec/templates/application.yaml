@@ -1,0 +1,33 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: {{.Release.Name}}
+  namespace: {{.Release.Namespace}}
+  labels:
+    app.kubernetes.io/name: {{.Release.Name}}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+  annotations:
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "checkpoint-public", "product_id": "cpappsec", "partner_name": "Check Point"}'
+    agentVersion: {{.Chart.Version}}
+spec:
+  descriptor:
+    type: cpappsec
+    version: "0.1.143785"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{.Release.Name}}
+  addOwnerRef: true
+  componentKinds:
+  - group: v1
+    kind: Secret
+  - group: v1
+    kind: Service
+  - group: v1
+    kind: ConfigMap
+  - group: v1
+    kind: ServiceAccount
+  - group: apps
+    kind: Deployment
+  - group: ''
+    kind: Ingress
