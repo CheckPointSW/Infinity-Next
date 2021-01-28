@@ -10,7 +10,7 @@ To use the scanner utility, you must have Python 3 and the pip packages listed i
 
 ### An API key
 
-If you don't have one yet, create a Check Point portal account [TODO: here]. Once your account is set up, log in to it and go to the Global Settings page (button on the bottom left). Click on API Keys -> New and under "Service" select "IoT Firmware Scanning". Expiration as you wish. *Make sure to save the credentials you're shown as they will not be shown again once you close the popup*.
+If you don't have one yet, create a Check Point portal account here: https://portal.checkpoint.com/create-account. Once your account is set up, log in to it and go to the Global Settings page (button on the bottom left). Click on API Keys -> New and under "Service" select "IoT Firmware Scanning". Expiration as you wish. *Make sure to save the credentials you're shown as they will not be shown again once you close the popup*.
 Set the environment variables SCANNER_CLIENT_ID and SCANNER_ACCESS_KEY to the values of your client id and secret key, respectively.
 
 Alternatively, although not recommended, you can place them in a file (by default, ".iotcreds") next to the scanner tool like so:
