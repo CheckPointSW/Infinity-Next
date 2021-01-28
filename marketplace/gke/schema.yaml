@@ -8,7 +8,7 @@ x-google-marketplace:
 
   # The release version is required in the schema and MUST match the
   # release tag on the the deployer.
-  publishedVersion: '0.1.143785'
+  publishedVersion: '0.1.148370'
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.
@@ -26,14 +26,25 @@ x-google-marketplace:
 
   # Image declaration is required here. Refer to the Images section below.
   images:
-    images.cpappsecnginxingress.repository:
+    '': #Primary image has no name.
+      properties:
+        imageRepo:
+          type: REPO_WITH_REGISTRY
+        imageTag:
+          type: TAG
+    cpappsecnginxingress:
+      properties:
+        imageRepo:
+          type: REPO_WITH_REGISTRY
+        imageTag:
+          type: TAG
+    cpappsecnanoagent:
+      properties:
+        imageRepo:
+          type: REPO_WITH_REGISTRY
+        imageTag:
+          type: TAG
       type: REPO_WITH_REGISTRY
-    images.cpappsecnginxingress.tag:
-      type: TAG
-    images.cpappsecnanoagent.repository:
-      type: REPO_WITH_REGISTRY
-    images.cpappsecnanoagent.tag:
-      type: TAG
   # Other fields, like clusterConstraints, can be included here.
 
 # The Properties and Required sections of v2 are structured the same as those of v1.

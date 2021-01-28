@@ -13,13 +13,13 @@ mysvcport: "80"
 #
 image:
   cpappsecnginxingress:
-    repository: gcr.io/cgconnect/cpappsec/cpappsecnginxingress
-    tag: 0.1.143785
+    properties:
+      imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnginxingress
+      imageTag: 0.1.148370
   cpappsecnanoagent:
-    repository: gcr.io/cgconnect/cpappsec/cpappsecnanoagent
-    tag: 0.1.143785
-  nginxCtlCpRepo: "checkpoint/cpappsec-nginx-ingress"
-  cpRepo: "checkpoint/cpappsec-nano-agent"
+    properties:
+     imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnanoagent
+     imageTag: 0.1.148370
 
 imagePullSecrets: []
 

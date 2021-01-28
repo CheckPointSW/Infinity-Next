@@ -36,7 +36,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: "{{.Values.image.cpappsecnginxingress.repository}}:{{ .Values.image.cpappsecnginxingress.tag }}"
+        image: "{{.Values.image.cpappsecnginxingress.properties.imageRepo}}:{{ .Values.image.cpappsecnginxingress.properties.imageTag }}"
         imagePullPolicy: IfNotPresent
         name: {{.Release.Name}}-cp-nginx-container
         ports:
@@ -56,7 +56,7 @@ spec:
         - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
         command:
         - /cp-nano-agent
-        image: "{{.Values.image.cpappsecnanoagent.repository}}:{{.Values.image.cpappsecnanoagent.tag}}"
+        image: "{{.Values.image.cpappsecnanoagent.properties.imageRepo}}:{{.Values.image.cpappsecnanoagent.properties.imageTag}}"
         imagePullPolicy: IfNotPresent
         name: {{.Release.Name}}-cp-nano-container
         resources: {}
