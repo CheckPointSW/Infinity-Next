@@ -5,11 +5,10 @@ metadata:
   namespace: {{.Release.Namespace}}
   labels:
     app.kubernetes.io/name: {{.Release.Name}}
-    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
   annotations:
+    kubernetes-engine.cloud.google.com/icon: >-
+      data:image/png;base64,{{ .Files.Get "logo.png" | b64enc }}
     marketplace.cloud.google.com/deploy-info: '{"partner_id": "checkpoint-public", "product_id": "cpappsec", "partner_name": "Check Point"}'
-    agentVersion: {{.Chart.Version}}
 spec:
   descriptor:
     type: cpappsec
