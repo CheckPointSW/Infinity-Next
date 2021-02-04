@@ -5,7 +5,7 @@ metadata:
   name: {{.Release.Name}}-ingress-ctl
   namespace: {{.Release.Namespace}}
   annotations:
-    agentVersion: {{ .Chart.Version }}
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "checkpoint-public", "product_id": "cpappsec", "partner_name": "Check Point"}'
   labels:
     app.kubernetes.io/name: {{.Release.Name}}-ingress-ctl
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}

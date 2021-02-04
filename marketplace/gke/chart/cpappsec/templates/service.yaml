@@ -11,7 +11,7 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
   annotations:
-    agentVersion: {{ .Chart.Version }}
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "checkpoint-public", "product_id": "cpappsec", "partner_name": "Check Point"}'
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
     service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
     service.beta.kubernetes.io/azure-dns-label-name: {{ .Release.Namespace }} 
