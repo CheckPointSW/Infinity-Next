@@ -1,15 +1,13 @@
 # The deployment specification for nginx-ingress with the Check Point Alpine Module
-# To expose the Ingress controller pods, you can use a different service configuration, according to this guide:
-# https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-ingress-ctl
+  name: {{.Release.Name}}-ingress-ctl
   namespace: {{.Release.Namespace}}
   annotations:
     agentVersion: {{ .Chart.Version }}
   labels:
-    app.kubernetes.io/name: nginx-ingress-ctl
+    app.kubernetes.io/name: {{.Release.Name}}-ingress-ctl
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
 spec:
@@ -17,19 +15,16 @@ spec:
    matchLabels:
      app: nginx-ingress
   replicas: 1 
-  selector:
-    matchLabels:
-      app: nginx-ingress
   template:
     metadata:
       labels:
         app: nginx-ingress
     spec:
-      serviceAccountName: nginx-ingress-waap-sa
+      serviceAccountName: {{.Values.operatorServiceAccount.name}}
       containers:
       - args:
-        - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
-        - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
+        - -nginx-configmaps=$(POD_NAMESPACE)/{{.Release.Name}}-cp-configmap
+        - -default-server-tls-secret=$(POD_NAMESPACE)/cpappsec-secret
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -41,9 +36,9 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: {{.Values.image.nginxCtlCpRepo}}
+        image: "{{.Values.image.cpappsecnginxingress.properties.imageRepo}}:{{ .Values.image.cpappsecnginxingress.properties.imageTag }}"
         imagePullPolicy: IfNotPresent
-        name: nginx-ingress-container
+        name: {{.Release.Name}}-cp-nginx-container
         ports:
         - containerPort: 80
           name: http
@@ -56,14 +51,14 @@ spec:
         terminationMessagePolicy: File
       - args:
         - --fog
-        - https://i2-agents.cloud.ngen.checkpoint.com
+        - {{.Values.cpfog}}
         - --token
-        - {{ required "Infinity nanoToken required" .Values.nanoToken}}
+        - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
         command:
         - /cp-nano-agent
-        image: {{.Values.image.cpRepo}}
+        image: "{{.Values.image.cpappsecnanoagent.properties.imageRepo}}:{{.Values.image.cpappsecnanoagent.properties.imageTag}}"
         imagePullPolicy: IfNotPresent
-        name: cp-agent-container
+        name: {{.Release.Name}}-cp-nano-container
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
