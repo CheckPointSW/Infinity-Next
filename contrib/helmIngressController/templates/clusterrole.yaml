@@ -2,7 +2,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx-ingress-waap-role
+  name: {{.Release.Name}}cprole
   annotations:
     agentVersion: {{ .Chart.Version }}
   labels:
@@ -10,60 +10,6 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - services
-  - endpoints
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - create
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - list
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - patch
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs:
-  - list
-  - watch
-  - get
-- apiGroups:
-  - "extensions"
-  resources:
-  - ingresses/status
-  verbs:
-  - update
 - apiGroups:
   - k8s.nginx.org
   resources:
@@ -77,6 +23,27 @@ rules:
   - watch
   - get
 - apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - configmaps
+  - secrets
+  - serviceaccounts
+  - events
+  - endpoints
+  - namespaces
+  verbs:
+  - '*'
+- apiGroups:
+  - extensions
+  resources:
+  - deployments
+  - daemonsets
+  - ingresses
+  verbs:
+  - '*'
+- apiGroups:
   - networking.k8s.io
   resources:
   - ingressclasses
@@ -84,14 +51,14 @@ rules:
   - get
 ---
 kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx-ingress-waap-binding
+  name: {{.Release.Name}}-cp-binding
 subjects:
 - kind: ServiceAccount
-  name: nginx-ingress-waap-sa
+  name: {{.Values.operatorServiceAccount.name}}
   namespace: {{.Release.Namespace}}
 roleRef:
   kind: ClusterRole
-  name: nginx-ingress-waap-role
+  name: {{.Release.Name}}cprole
   apiGroup: rbac.authorization.k8s.io
