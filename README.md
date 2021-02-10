@@ -8,8 +8,9 @@ The repository contains:
 ## Related Products and Solutions
 * Infinity Next
 * CloudGuard
+* IoT Firmware Scanner
 
 ## References
 * Infinity Portal is available at https://portal.checkpoint.com
-* Infinity Next documentation is available at * https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/Infinity-Next-Admin-Guide/Topics-Infinity-Next/Overview-Infinity-Next.htm 
+* Infinity Next documentation is available at https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/Infinity-Next-Admin-Guide/Topics-Infinity-Next/Overview-Infinity-Next.htm 
 * Infinity Next CheckMates community is available at https://community.checkpoint.com/t5/Infinity-Next/bd-p/infinity-next
