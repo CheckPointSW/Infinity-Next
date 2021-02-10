@@ -1,16 +1,18 @@
 apiVersion: v2
-name: cpwaapingressctl
-description: A Helm chart for the Infinity Next Ingress Controller for Web Application and API protection
+name: cpappsec
+description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web Application and API protection
 
 type: application
 
-version: 0.1.1
+version: 0.1.2
 
 appVersion: 1.16.0
 
 keywords: 
   - checkpoint
   - waap
+  - cloudguard
+  - appsec
   - nginx
   - ingress
 
