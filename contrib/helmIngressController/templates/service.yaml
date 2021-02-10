@@ -1,13 +1,11 @@
 # Service configuration for the nginx ingress controller service
-# To expose the Ingress controller pods, you can use a different service configuration, according to this guide:
-# https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-ingress-ctl-svc
+  name: {{.Release.Name}}-svc
   namespace: {{.Release.Namespace}}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-nginx-ingress-ctl-svc
+    app.kubernetes.io/name: {{ .Release.Name }}-cp-ingress-ctl-svc
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
   annotations:

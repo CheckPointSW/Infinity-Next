@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-config
+  name: {{.Release.Name}}-cp-ingress
   annotations:
     agentVersion: {{ .Chart.Version }}
   labels:
-    app.kubernetes.io/name: nginx-config
+    app.kubernetes.io/name: {{.Release.Name}}-cp-ingress
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote}}
 spec:
   rules:
   - host: {{.Values.appURL}}
