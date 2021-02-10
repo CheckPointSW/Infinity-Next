@@ -41,11 +41,14 @@ Define your application in the CloudGuard AppSec application of the Check Point 
 
 Once the application has been configured in the CloudGuard Portal, retrieve the value for the nanoToken.
 
+Download the latest release of the chart here:
+```bash
+https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments
+```
 Next, install the chart with the chosen release name (e.g. `my-release`), run:
 
 ```bash
-$ helm repo add checkpoint https://raw.githubusercontent.com/CheckPointSW/charts/master/repository/
-$ helm install my-release checkpoint/cpappsec-0.1.2.tgz --namespace="{your namespace}" --set nanoToken="{your AppSec token string here}" --set appURL="{your appURL}" --set mysvcname="{your app Service Name}" --set mysvcport="{your app service port}" 
+$ helm install my-release cpappsec-0.1.2.tgz --namespace="{your namespace}" --set nanoToken="{your AppSec token string here}" --set appURL="{your appURL}" --set mysvcname="{your app Service Name}" --set mysvcport="{your app service port}" 
 ```
 These are additional optional flags:
 ```bash
