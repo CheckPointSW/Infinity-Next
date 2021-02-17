@@ -4,7 +4,7 @@ description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web A
 
 type: application
 
-version: 0.1.2
+version: 0.1
 
 appVersion: 1.16.0
 
@@ -16,4 +16,4 @@ keywords:
   - nginx
   - ingress
 
-home: https://github.com/CheckPointSW/charts
+home: https://github.com/CheckPointSW/CloudGuard-AppSec

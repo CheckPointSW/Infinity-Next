@@ -9,29 +9,22 @@ nanoToken: "12345abc-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d64
 appURL: "myapp.mycompany.com"
 mysvcname: "myapp"
 mysvcport: "80"
-cpfog: "https://i2-agents.cloud.ngen.checkpoint.com"
 
+#
 image:
   cpappsecnginxingress:
     properties:
-      imageRepo: checkpoint/infinity-next-nginx-ingress
-      imageTag: 148370
+      imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnginxingress
+      imageTag: 0.1.148370
   cpappsecnanoagent:
     properties:
-     imageRepo: checkpoint/infinity-next-nano-agent
-     imageTag: 148370
+     imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnanoagent
+     imageTag: 0.1.148370
 
 imagePullSecrets: []
 
-
-operatorServiceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: "cpappsec-sa"
+controller:
+  operatorServiceAccount: cpappsec-operatorserviceaccount
 
 podAnnotations: {}
 

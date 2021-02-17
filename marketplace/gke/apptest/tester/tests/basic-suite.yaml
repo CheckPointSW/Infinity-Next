@@ -1,0 +1,36 @@
+#TODO: Add test for External IP when configured
+actions:
+- name: Site address should be 200 OK
+  bashTest:
+    script: curl -k "http://{{ .Env.APP_INSTANCE_NAME }}-cp-ingress-ctl-svc"
+    expect:
+      stdout:
+        contains: 'Nginx'
+      exitCode:
+        equals: 0
+- name: Site address (SSL) should be 200 OK
+  bashTest:
+    script: curl -k "https://{{ .Env.APP_INSTANCE_NAME }}-cp-ingress-ctl-svc"
+    expect:
+      stdout:
+        contains: 'Nginx'
+      exitCode:
+        equals: 0
+#- name: Site address should be 200 OK
+#  bashTest:
+#    script: curl -k "http://${EXTERNAL_IP}"
+#    expect:
+#      stdout:
+#        contains: 'Nginx'
+#      exitCode:
+#        equals: 0
+#- name: Site address (SSL) should be 200 OK
+#  bashTest:
+#    script: curl -k "https://${EXTERNAL_IP}"
+#    expect:
+#      stdout:
+#        contains: 'Nginx'
+#      exitCode:
+#        equals: 0
+
+

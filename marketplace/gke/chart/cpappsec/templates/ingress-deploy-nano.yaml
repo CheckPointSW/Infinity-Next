@@ -5,7 +5,7 @@ metadata:
   name: {{.Release.Name}}-ingress-ctl
   namespace: {{.Release.Namespace}}
   annotations:
-    agentVersion: {{ .Chart.Version }}
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "checkpoint-public", "product_id": "cpappsec", "partner_name": "Check Point"}'
   labels:
     app.kubernetes.io/name: {{.Release.Name}}-ingress-ctl
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -20,11 +20,11 @@ spec:
       labels:
         app: nginx-ingress
     spec:
-      serviceAccountName: {{.Values.operatorServiceAccount.name}}
+      serviceAccountName: {{.Release.Name}}-operatorserviceaccount
       containers:
       - args:
         - -nginx-configmaps=$(POD_NAMESPACE)/{{.Release.Name}}-cp-configmap
-        - -default-server-tls-secret=$(POD_NAMESPACE)/cpappsec-secret
+        - -default-server-tls-secret=$(POD_NAMESPACE)/{{.Release.Name}}-cp-secret
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -51,7 +51,7 @@ spec:
         terminationMessagePolicy: File
       - args:
         - --fog
-        - {{.Values.cpfog}}
+        - https://i2-agents.cloud.ngen.checkpoint.com
         - --token
         - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
         command:

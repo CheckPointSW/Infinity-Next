@@ -1,0 +1,23 @@
+properties:
+  testerImage:
+    type: string
+    default: $REGISTRY/tester:$TAG
+    x-google-property:
+      type: IMAGE
+  nanoToken:
+    type: string
+    default: "35741c8e-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d649f781"
+    description: "Insert your token from CloudGuard AppSec Portal App Token here"
+  appURL:
+    type: string
+    default: "juice-shop.checkpoint.com"
+    description: "Your Application URL"
+  mysvcname:
+    type: string
+    default: "juice-shop"
+    description: "Your applicaiton service name"
+  mysvcport:
+    type: string
+    default: "8080"
+    description: "The service port your application is listening on"
+
