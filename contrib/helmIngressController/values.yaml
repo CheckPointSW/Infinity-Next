@@ -9,17 +9,16 @@ nanoToken: "12345abc-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d64
 appURL: "myapp.mycompany.com"
 mysvcname: "myapp"
 mysvcport: "80"
-cpfog: "https://i2-agents.cloud.ngen.checkpoint.com"
 
 image:
   cpappsecnginxingress:
     properties:
       imageRepo: checkpoint/infinity-next-nginx-ingress
-      imageTag: 148370
+      imageTag: latest
   cpappsecnanoagent:
     properties:
      imageRepo: checkpoint/infinity-next-nano-agent
-     imageTag: 148370
+     imageTag: latest
 
 imagePullSecrets: []
 
