@@ -1,13 +1,13 @@
+
 # Check Point CloudGuard AppSec
 ## Overview
 Check Point CloudGuard AppSec delivers access control and advanced threat prevention including web and api protection for mission-critical assets.  Check Point CloudGuard AppSec delivers advanced, multi-layered threat prevention to protect customer assets in Kubernetes clusters from web attacks and sophisticated threats based on Contextual AI.
 
-Helm charts provide the ability to deploy a collection of kubernetes services and containers with a single command. This helm chart deploys an ingress controller integrated with the Check Point container images that include Check Point CloudGuard AppSec nano agent. If you want to integrate the Check Point CloudGuard AppSec nano agent with an ingress controller other than nginx, follow the instructions in the AppSec installation guide. Another option would be to download the helm chart and modify the parameters to match your Kubernetes/Application environment.
+Helm charts provide the ability to deploy a collection of kubernetes services and containers with a single command. This helm chart deploys an Nginx-based (1.19) ingress controller integrated with the Check Point container images that include and Nginx Reverse Proxy container integrated with the Check Point CloudGuard AppSec nano agent container. It is designed to run in front of your existing Kubernetes Application. If you want to integrate the Check Point CloudGuard AppSec nano agent with an ingress controller other than nginx, follow the instructions in the CloudGuard AppSec installation guide. Another option would be to download the helm chart and modify the parameters to match your Kubernetes/Application environment.
 
 ## Architecture
 **NOTE:** The following diagram shows a sample architecture with the application (optionally) exposed externally, using an Ingress and TLS configuration. The steps to enable the Ingress resource are in the sections below.
 ![Sample Architecture Diagram](resources/CP-CloudGuard_AppSec-Sample-Architecture.png)
-
 
 The following table lists the configurable parameters of this chart and their default values.
 
@@ -17,8 +17,10 @@ The following table lists the configurable parameters of this chart and their de
 | `appURL`                                           | URL of the application (must resolve to cluster IP address after deployment,required)     | `myapp.mycompany.com`                                          |
 | `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
-| `image.nginxCtlCpRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx`                                              |
-| `image.cpRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
+| `cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx`                                              |
+| `cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `0.1.148370`                                              |
+| `cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
+| `cpappsecnanoagent.properties.imageTag`                                              | Version to use              | `0.1.148370`                                           |
 | `TLS_CERTIFICATE_CRT`                                           | Default TLS Certificate               | `Certificate string`                         |
 | `TLS_CERTIFICATE_KEY`                                           | Default TLS Certificate Key               | `Certificate Key string`                         | 
 
