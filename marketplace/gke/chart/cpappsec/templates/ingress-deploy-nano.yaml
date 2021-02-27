@@ -50,8 +50,6 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       - args:
-        - --fog
-        - https://i2-agents.cloud.ngen.checkpoint.com
         - --token
         - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
         command:

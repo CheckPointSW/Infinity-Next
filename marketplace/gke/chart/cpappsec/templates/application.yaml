@@ -12,7 +12,7 @@ metadata:
 spec:
   descriptor:
     type: cpappsec
-    version: "0.1.148370"
+    version: "0.1.155168"
   selector:
     matchLabels:
       app.kubernetes.io/name: {{.Release.Name}}
