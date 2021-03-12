@@ -193,7 +193,15 @@ SERVICE_IP=$(kubectl get ingress $APP_INSTANCE_NAME-cp-ingress-ctl-svc \
 echo "https://${SERVICE_IP}/"
 ```
 The command shows you the URL of your site.
-
+### Backup and Restore
+The CloudGuard AppSec deployment is stateless and requires no backup. Restoration means redeploying the solution.
+### Image Updates
+In order to use a different image version of the solution, use the command line to deploy with the following option: 
+```
+--set cpappsec.image.tag="$TAG"
+```
+### Scaling
+You may download the helm template and modify the "ingress-deploy-nano.yaml" file to increase the number of ingress pods defined by the solution. Auto-scaling is not yet supported.
 # Uninstall the Application
 
 ## Using the Google Cloud Platform Console
