@@ -8,7 +8,7 @@ x-google-marketplace:
 
   # The release version is required in the schema and MUST match the
   # release tag on the the deployer.
-  publishedVersion: '0.1.155168'
+  publishedVersion: '1.0.159997'
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.

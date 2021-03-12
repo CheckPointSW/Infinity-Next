@@ -6,7 +6,7 @@ properties:
       type: IMAGE
   nanoToken:
     type: string
-    default: "cp-10823b12-49af-4329-aec9-879d57415c507bcb74c3-1ba7-49bc-963b-1fcddc0c2d60"
+    default: "cp-ef533049-6e3d-4e79-beaa-599fdb601ca266371efa-c60d-4dfb-a607-4f1100acb9e9"
     description: "Insert your token from CloudGuard AppSec Portal App Token here"
   appURL:
     type: string

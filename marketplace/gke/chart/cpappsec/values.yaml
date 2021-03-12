@@ -15,11 +15,11 @@ image:
   cpappsecnginxingress:
     properties:
       imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnginxingress
-      imageTag: 0.1.155168
+      imageTag: 1.0.159997
   cpappsecnanoagent:
     properties:
      imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnanoagent
-     imageTag: 0.1.155168
+     imageTag: 1.0.159997
 
 imagePullSecrets: []
 
