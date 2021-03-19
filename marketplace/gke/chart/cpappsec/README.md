@@ -23,6 +23,8 @@ The following table lists the configurable parameters of this chart and their de
 | `appURL`                                           | URL of the application (must resolve to cluster IP address after deployment,required)     | `myapp.mycompany.com`                                          |
 | `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
+| `myNodePort`                                           |  Host Node Port used for inbound ingress     | `30080`                         |
+| `mySSLNodePort`                                           |  Host Node Port used for SSL inbound ingress     | `30443`                         |
 | `image.nginxCtlCpRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx`                                              |
 | `image.cpRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
 | `TLS_CERTIFICATE_CRT`                                           | Default TLS Certificate               | `Certificate string`                         |
@@ -45,6 +47,8 @@ These are additional optional flags:
 --set appURL="{your app URL}" 
 --set mysvcname="{your app service name" 
 --set mysvcport="{your app service port}"
+--set myNodePort="{your assigned node port}"
+--set mySSLNodePort="{your assigned SSL node port}"
 --set image.nginxCtlCpRepo="{repo location of the CloudGuard AppSec nginx image}"  
 --set image.cpRepo="{repo location of the CloudGuard AppSec Nano image}" 
 ```
@@ -62,7 +66,7 @@ Refer to [values.yaml](values.yaml) for the full run-down on defaults. These are
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install my-release --namespace="myappnamespace" checkpoint/cpappsec-ingress-ctl --set nanoToken="3574..." --set appURL="my-app.example.com" --set mysvcname="myappsvc" --set mysvcport="8080"
+$ helm install my-release --namespace="myappnamespace" checkpoint/cpappsec-ingress-ctl --set nanoToken="3574..." --set appURL="my-app.example.com" --set mysvcname="myappsvc" --set mysvcport="8080" --myNodePort="30080" --mySSLNodePort="30443"
 
 ```
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,

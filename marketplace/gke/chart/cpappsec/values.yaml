@@ -9,6 +9,8 @@ nanoToken: "12345abc-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d64
 appURL: "myapp.mycompany.com"
 mysvcname: "myapp"
 mysvcport: "80"
+myNodePort: "30080"
+mySSLNodePort: "30443"
 
 #
 image:

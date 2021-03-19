@@ -20,4 +20,12 @@ properties:
     type: string
     default: "8080"
     description: "The service port your application is listening on"
+  myNodePort:
+    type: string
+    default: "30080"
+    description: "The Node Port assigned for Inbound Ingress"
+  mySSLNodePort:
+    type: string
+    default: "30443"
+    description: "The SSL Node Port assigned for Inbound Ingress"
 

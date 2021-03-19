@@ -17,6 +17,8 @@ The following table lists the configurable parameters of this chart and their de
 | `appURL`                                           | URL of the application (must resolve to cluster IP address after deployment,required)     | `myapp.mycompany.com`                                          |
 | `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
+| `myNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
+| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingressred)     | `30443`                         |
 | `cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx`                                              |
 | `cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `0.1.148370`                                              |
 | `cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
@@ -107,7 +109,7 @@ It is advised to use the stable image reference which you can find on [Marketpla
 Example:
 
 ```shell
-export TAG="0.1.2"
+export TAG="0.1.155997"
 ```
 Alternatively you can use short tag which points to the latest image for selected version.
 > Warning: this tag is not stable and referenced image might change over time.
@@ -163,6 +165,8 @@ helm template chart/cpappsec \
   --set cpappsec.appURL="Your Application URL" \
   --set cpappsec.mysvcname="Your Service Name" \
   --set cpappsec.mysvcport="Your Service Port" \
+  --set cpappsec.myNodePort="The Host Node Port to be assigned" \
+  --set cpappsec.mySSLNodePort="The Host Node SSL Port to be assigned" \
   --set tls.base64EncodedPrivateKey="$TLS_CERTIFICATE_KEY" \
   --set tls.base64EncodedCertificate="$TLS_CERTIFICATE_CRT" \
   > "${APP_INSTANCE_NAME}_manifest.yaml"
@@ -193,15 +197,7 @@ SERVICE_IP=$(kubectl get ingress $APP_INSTANCE_NAME-cp-ingress-ctl-svc \
 echo "https://${SERVICE_IP}/"
 ```
 The command shows you the URL of your site.
-### Backup and Restore
-The CloudGuard AppSec deployment is stateless and requires no backup. Restoration means redeploying the solution.
-### Image Updates
-In order to use a different image version of the solution, use the command line to deploy with the following option: 
-```
---set cpappsec.image.tag="$TAG"
-```
-### Scaling
-You may download the helm template and modify the "ingress-deploy-nano.yaml" file to increase the number of ingress pods defined by the solution. Auto-scaling is not yet supported.
+
 # Uninstall the Application
 
 ## Using the Google Cloud Platform Console
