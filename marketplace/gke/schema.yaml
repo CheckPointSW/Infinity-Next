@@ -8,7 +8,7 @@ x-google-marketplace:
 
   # The release version is required in the schema and MUST match the
   # release tag on the the deployer.
-  publishedVersion: '0.1.148370'
+  publishedVersion: '1.0.159997'
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.
@@ -130,7 +130,15 @@ properties:
     type: string
     default: "8080"
     description: "The service port your application is listening on"
-    
+  myNodePort:
+    type: string
+    default: "30080"
+    description: "The Node Port assigned for Inbound Ingress"
+  mySSLNodePort:
+    type: string
+    default: "30443"
+    description: "The SSL Node Port assigned for Inbound Ingress"
+
 required:
 - name
 - namespace

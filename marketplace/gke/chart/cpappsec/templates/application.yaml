@@ -12,7 +12,41 @@ metadata:
 spec:
   descriptor:
     type: cpappsec
-    version: "0.1.148370"
+    version: "1.0.159997"
+
+    description: >-
+      Check Point CloudGuard AppSec provides Web Application Protection against OWASP and Botnet attacks.
+      # Support
+      Check Point Software Technologies provides support for licensed deployments
+    maintainers:
+    - name: Check Point Software Technologies
+      url: https://www.checkpoint.com
+    links:
+    - description: 'User Guide: Google Click to Deploy CloudGuard AppSec'
+      url: https://github.com/CheckPointSW/Infinity-Next/blob/main/marketplace/gke/README.md
+    - description: Getting Started with CloudGuard AppSec
+      url: https://www.checkpoint.com/products/cloudguard-appsec/
+    notes: |-
+      # Open a command line with access to your gcloud cluster.
+      Map kubectl credentials to your cluster with 
+      ```
+      gcloud container clusters get-credentials {your K8s cluster name}
+      ```
+      Get the external IP of your Check Point AppSec Service using the following command:
+      ```
+      SERVICE_IP=$(kubectl get svc {your deployment name}-svc --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+      echo "https://${SERVICE_IP}/"
+      ```
+      The command shows you the URL of your site.
+      Update your DNS records to point the URL of your application to this IP address
+      # Update TLS certificate for CloudGuard AppSec
+      By default the application used self-signed certificate. You can follow
+      [Update TLS certificate for AppSec section](https://github.com/CheckPointSW/Infinity-Next/blob/main/marketplace/gke/README.md#create-tls-certificate-for-check-point-appsec)
+      to update it.
+      # Open your Kubernetes Application Site
+      AppSec is exposed as a NodePort/LoadBalancer service `{your deployment name}-svc`. Connecting to
+      AppSec inspects traffic and forwards it to your existing K8s application specified when deploying AppSec
+  info:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{.Release.Name}}

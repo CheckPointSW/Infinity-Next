@@ -6,7 +6,7 @@ properties:
       type: IMAGE
   nanoToken:
     type: string
-    default: "35741c8e-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d649f781"
+    default: "cp-ef533049-6e3d-4e79-beaa-599fdb601ca266371efa-c60d-4dfb-a607-4f1100acb9e9"
     description: "Insert your token from CloudGuard AppSec Portal App Token here"
   appURL:
     type: string
@@ -20,4 +20,12 @@ properties:
     type: string
     default: "8080"
     description: "The service port your application is listening on"
+  myNodePort:
+    type: string
+    default: "30080"
+    description: "The Node Port assigned for Inbound Ingress"
+  mySSLNodePort:
+    type: string
+    default: "30443"
+    description: "The SSL Node Port assigned for Inbound Ingress"
 
