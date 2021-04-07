@@ -1,4 +1,5 @@
 
+
 # Check Point CloudGuard AppSec
 ## Overview
 Check Point CloudGuard AppSec delivers access control and advanced threat prevention including web and api protection for mission-critical assets.  Check Point CloudGuard AppSec delivers advanced, multi-layered threat prevention to protect customer assets in Kubernetes clusters from web attacks and sophisticated threats based on Contextual AI.
@@ -18,11 +19,11 @@ The following table lists the configurable parameters of this chart and their de
 | `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
 | `myNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
-| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingressred)     | `30443`                         |
-| `cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx`                                              |
-| `cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `0.1.148370`                                              |
-| `cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
-| `cpappsecnanoagent.properties.imageTag`                                              | Version to use              | `0.1.148370`                                           |
+| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingress)     | `30443`                         |
+| `image.cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx-ingress`                                              |
+| `image.cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `1.0.2`                                              |
+| `image.cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
+| `image.cpappsecnanoagent.properties.imageTag`                                              | Version to use              | `1.0.2`                                           |
 | `TLS_CERTIFICATE_CRT`                                           | Default TLS Certificate               | `Certificate string`                         |
 | `TLS_CERTIFICATE_KEY`                                           | Default TLS Certificate Key               | `Certificate Key string`                         | 
 
@@ -67,6 +68,7 @@ export ZONE=us-west1-a
 gcloud container clusters create "$CLUSTER" --zone "$ZONE"
 ```
 Configure `kubectl` to connect to the new cluster:
+																				   
 ```shell
 gcloud container clusters get-credentials "$CLUSTER" --zone "$ZONE"
 ```
@@ -109,7 +111,7 @@ It is advised to use the stable image reference which you can find on [Marketpla
 Example:
 
 ```shell
-export TAG="0.1.155997"
+export TAG="1.0.2"
 ```
 Alternatively you can use short tag which points to the latest image for selected version.
 > Warning: this tag is not stable and referenced image might change over time.
@@ -121,13 +123,25 @@ export TAG="0.1"
 Configure the container images:
 
 ```shell
-export IMAGE_CPAPPSEC="marketplace.gcr.io/google/cpappsec"
+export IMAGE_CPAPPSECINGRESS="gcr.io/checkpoint-public/cpappsec/cpappsecnginxingress"
+export IMAGE_CPAPPSECNANO="gcr.io/checkpoint-public/cpappsec/cpappsecnanoagent"
 ```
 #### Create TLS certificate for Check Point AppSec
 
 > Note: You can skip this step to use a default CRT.
+   
+			  
+
+				 
+   
+			   
+		 
 
 1.  If you already have a certificate that you want to use, copy your certificate and key pair to the `/tmp/tls.crt`, and `/tmp/tls.key` files, then skip to the next step.
+	
+				  
+
+   
 
     To create a new certificate, run the following command:
     ```shell
@@ -159,8 +173,10 @@ expanded manifest file for future updates to the application.
 helm template chart/cpappsec \
   --name "$APP_INSTANCE_NAME" \
   --namespace "$NAMESPACE" \
-  --set cpappsec.image.repo="$IMAGE_CPAPPSEC" \
-  --set cpappsec.image.tag="$TAG" \
+  --set image.cpappsecnginxingress.properties.imageRepo="$IMAGE_CPAPPSECINGRESS" \
+  --set image.cpappsecnginxingress.properties.imagetag="$TAG" \
+  --set image.cpappsecnanoagent.properties.imageRepo="$IMAGE_CPAPPSECNANO" \
+  --set image.cpappsecnanoagent.properties.imagetag="$TAG" \
   --set cpappsec.nanoToken="Your nanoToken" \
   --set cpappsec.appURL="Your Application URL" \
   --set cpappsec.mysvcname="Your Service Name" \
