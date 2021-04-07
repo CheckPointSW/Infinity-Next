@@ -12,7 +12,7 @@ metadata:
 spec:
   descriptor:
     type: cpappsec
-    version: "1.0.159997"
+    version: "1.0.2"
 
     description: >-
       Check Point CloudGuard AppSec provides Web Application Protection against OWASP and Botnet attacks.

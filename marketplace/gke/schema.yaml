@@ -8,7 +8,7 @@ x-google-marketplace:
 
   # The release version is required in the schema and MUST match the
   # release tag on the the deployer.
-  publishedVersion: '1.0.159997'
+  publishedVersion: '1.0.2'
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.
@@ -57,7 +57,7 @@ properties:
     type: string
     x-google-marketplace:
       type: NAMESPACE
-  operatorServiceAccount:
+  opsvcacct:
     type: string
     x-google-marketplace:
       type: SERVICE_ACCOUNT

@@ -20,7 +20,7 @@ spec:
       labels:
         app: nginx-ingress
     spec:
-      serviceAccountName: {{.Release.Name}}-operatorserviceaccount
+      serviceAccountName: {{.Release.Name}}-opsvcacct
       containers:
       - args:
         - -nginx-configmaps=$(POD_NAMESPACE)/{{.Release.Name}}-cp-configmap
