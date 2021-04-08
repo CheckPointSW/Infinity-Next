@@ -6,7 +6,7 @@ metadata:
   annotations:
     agentVersion: {{ .Chart.Version }}
   labels:
-    app.kubernetes.io/name: nginx-ingress
+    app.kubernetes.io/name: {{.Release.Name}}cprole
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
 rules:

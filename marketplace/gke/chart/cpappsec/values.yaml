@@ -17,16 +17,16 @@ image:
   cpappsecnginxingress:
     properties:
       imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnginxingress
-      imageTag: 1.0.159997
+      imageTag: 1.0.2
   cpappsecnanoagent:
     properties:
      imageRepo: gcr.io/checkpoint-public/cpappsec/cpappsecnanoagent
-     imageTag: 1.0.159997
+     imageTag: 1.0.2
 
 imagePullSecrets: []
 
 controller:
-  operatorServiceAccount: cpappsec-operatorserviceaccount
+  opsvcacct: cpappsec-opsvcacct
 
 podAnnotations: {}
 
