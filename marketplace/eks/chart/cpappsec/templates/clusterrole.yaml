@@ -1,0 +1,64 @@
+# This defines the ClusterRoles needed for the app within the namespace
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{.Release.Name}}cprole
+  annotations:
+    agentVersion: {{ .Chart.Version }}
+  labels:
+    app.kubernetes.io/name: {{.Release.Name}}cprole
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+rules:
+- apiGroups:
+  - k8s.nginx.org
+  resources:
+  - virtualservers
+  - virtualserverroutes
+  - globalconfigurations
+  - transportservers
+  - policies
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - configmaps
+  - secrets
+  - serviceaccounts
+  - events
+  - endpoints
+  - namespaces
+  verbs:
+  - '*'
+- apiGroups:
+  - extensions
+  resources:
+  - deployments
+  - daemonsets
+  - ingresses
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingressclasses
+  verbs:
+  - get
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{.Release.Name}}-cp-binding
+subjects:
+- kind: ServiceAccount
+  name: {{.Values.operatorServiceAccount.name}}
+  namespace: {{.Release.Namespace}}
+roleRef:
+  kind: ClusterRole
+  name: {{.Release.Name}}cprole
+  apiGroup: rbac.authorization.k8s.io

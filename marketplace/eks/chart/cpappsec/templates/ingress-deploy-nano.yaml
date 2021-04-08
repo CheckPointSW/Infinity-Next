@@ -1,0 +1,67 @@
+# The deployment specification for nginx-ingress with the Check Point Alpine Module
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-ingress-ctl
+  namespace: {{.Release.Namespace}}
+  annotations:
+    agentVersion: {{ .Chart.Version }}
+  labels:
+    app.kubernetes.io/name: {{.Release.Name}}-ingress-ctl
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+spec:
+  selector:
+   matchLabels:
+     app: nginx-ingress
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+    spec:
+      serviceAccountName: {{.Values.operatorServiceAccount.name}}
+      containers:
+      - args:
+        - -nginx-configmaps=$(POD_NAMESPACE)/{{.Release.Name}}-cp-configmap
+        - -default-server-tls-secret=$(POD_NAMESPACE)/cpappsec-secret
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        image: "{{.Values.image.cpappsecnginxingress.properties.imageRepo}}:{{ .Values.image.cpappsecnginxingress.properties.imageTag }}"
+        imagePullPolicy: IfNotPresent
+        name: {{.Release.Name}}-cp-nginx-container
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - args:
+        - --token
+        - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
+        command:
+        - /cp-nano-agent
+        image: "{{.Values.image.cpappsecnanoagent.properties.imageRepo}}:{{.Values.image.cpappsecnanoagent.properties.imageTag}}"
+        imagePullPolicy: IfNotPresent
+        name: {{.Release.Name}}-cp-nano-container
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

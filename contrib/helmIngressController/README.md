@@ -1,5 +1,3 @@
-
-
 # Helm Chart for Check Point CloudGuard AppSec
 ## Overview
 NOTE: This chart will not work on EKS. For eks, use https://github.com/CheckPointSW/Infinity-Next/tree/main/marketplace/eks

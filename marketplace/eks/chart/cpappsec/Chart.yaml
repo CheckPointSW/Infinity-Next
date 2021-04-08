@@ -1,0 +1,19 @@
+apiVersion: v2
+name: cpappsec-eks
+description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web Application and API protection
+
+type: application
+
+version: 1.0.2
+
+appVersion: 1.16.0
+
+keywords: 
+  - checkpoint
+  - waap
+  - cloudguard
+  - appsec
+  - nginx
+  - ingress
+
+home: https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments
