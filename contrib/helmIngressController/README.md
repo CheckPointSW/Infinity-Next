@@ -8,7 +8,7 @@ Helm charts provide the ability to deploy a collection of kubernetes services an
 
 ## Architecture
 **NOTE:** The following diagram shows a sample architecture with the application (optionally) exposed externally, using an Ingress and TLS configuration. The steps to enable the Ingress resource are in the sections below.
-![Sample Architecture Diagram](resources/CP-CloudGuard_AppSec-Sample-Architecture.png)
+![Sample Architecture Diagram](https://github.com/chkp-mnichols/Infinity-Next/blob/main/contrib/resources/CP-CloudGuard_AppSec-Sample-Architecture.png)
 
 The following table lists the configurable parameters of this chart and their default values.
 
