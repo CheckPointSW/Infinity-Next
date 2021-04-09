@@ -11,6 +11,8 @@ mysvcname: "myapp"
 mysvcport: "80"
 myNodePort: "30080"
 mySSLNodePort: "30443"
+# Platform can be EKS, AKS, GKE, or private
+platform: "private"
 
 image:
   cpappsecnginxingress:

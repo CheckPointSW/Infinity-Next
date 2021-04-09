@@ -1,6 +1,6 @@
 # Check Point CloudGuard AppSec for AKS
 ## Overview
-Check Point CloudGuard AppSec delivers access control and advanced threat prevention including web and api protection for mission-critical assets.  Check Point CloudGuard AppSec delivers advanced, multi-layered threat prevention to protect customer assets in Kubernetes clusters from web attacks and sophisticated threats based on Contextual AI.
+Check Point CloudGuard AppSec delivers access control, and advanced, multi-layered threat prevention including Web and API protection for mission-critical assets.
 
 Helm charts provide the ability to deploy a collection of kubernetes services and containers with a single command. This helm chart deploys an Nginx-based (1.19) ingress controller integrated with the Check Point container images that include and Nginx Reverse Proxy container integrated with the Check Point CloudGuard AppSec nano agent container. It is designed to run in front of your existing Kubernetes Application. If you want to integrate the Check Point CloudGuard AppSec nano agent with an ingress controller other than nginx, follow the instructions in the CloudGuard AppSec installation guide. Another option would be to download the helm chart and modify the parameters to match your Kubernetes/Application environment.
 
@@ -18,6 +18,7 @@ The following table lists the configurable parameters of this chart and their de
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
 | `myNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
 | `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingress)     | `30443`                         |
+| `platform`                                        |  Deployment Platform (EKS, AKS, GKE, private)     | `private`                         |
 | `image.cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx-ingress`                                              |
 | `image.cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `1.0.2`                                              |
 | `image.cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |

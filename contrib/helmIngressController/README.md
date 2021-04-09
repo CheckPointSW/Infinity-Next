@@ -1,10 +1,15 @@
+
+
 # Helm Chart for Check Point CloudGuard AppSec
 ## Overview
-NOTE: This chart will not work on EKS. For eks, use https://github.com/CheckPointSW/Infinity-Next/tree/main/marketplace/eks
-Check Point CloudGuard AppSec delivers access control and advanced threat prevention including web and api protection for mission-critical assets.  Check Point CloudGuard AppSec delivers advanced, multi-layered threat prevention to protect customer assets in Kubernetes clusters from web attacks and sophisticated threats based on Contextual AI.
+Check Point CloudGuard AppSec delivers access control, and advanced, multi-layered threat prevention including Web and API protection for mission-critical assets.
 
 Helm charts provide the ability to deploy a collection of kubernetes services and containers with a single command. This helm chart deploys an Nginx-based (1.19) ingress controller integrated with the Check Point container images that include and Nginx Reverse Proxy container integrated with the Check Point CloudGuard AppSec nano agent container. It is designed to run in front of your existing Kubernetes Application. If you want to integrate the Check Point CloudGuard AppSec nano agent with an ingress controller other than nginx, follow the instructions in the CloudGuard AppSec installation guide. Another option would be to download the helm chart and modify the parameters to match your Kubernetes/Application environment.
+
 ## Architecture
+**NOTE:** The following diagram shows a sample architecture with the application (optionally) exposed externally, using an Ingress and TLS configuration. The steps to enable the Ingress resource are in the sections below.
+![Sample Architecture Diagram](resources/CP-CloudGuard_AppSec-Sample-Architecture.png)
+
 The following table lists the configurable parameters of this chart and their default values.
 
 | Parameter                                                  | Description                                                     | Default                                          |
@@ -14,7 +19,8 @@ The following table lists the configurable parameters of this chart and their de
 | `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
 | `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
 | `myNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
-| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingressred)     | `30443`                         |
+| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingress     | `30443`                         |
+| `platform`                                        |  Deployment Platform (EKS, AKS, GKE, private)     | `private`                         |
 | `image.cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx-ingress`                                              |
 | `image.cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `latest`                                              |
 | `image.cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
@@ -38,10 +44,12 @@ The following table lists the configurable parameters of this chart and their de
 *   _templates/ingress.yaml_ \- specification for the ingress settings for the application that point to your inbound service.
 *   _templates/secrets.yaml_ \- secrets file.
 *   _templates/service.yaml_ \- specifications for the ingress controller, e.g. LoadBalancer listening on port 80, forwarding to nodePort 30080 of the application 
-## Installing the Chart 
-Define your application in the CloudGuard AppSec application of the Check Point Infinity Portal according to the CloudGuard AppSec Deployment Guide section on AppSec (WAAP) Management .
 
-Once the application has been configured in the CloudGuard Portal, retrieve the value for the nanoToken.
+### Prerequisites
+#### Configure your application in the [Check Point Infinity Next AppSec Portal](https://portal.checkpoint.com) 
+Define the application you want to protect in the “Infinity Next AppSec” application of the Check Point Infinity Next AppSec Portal according to the CloudGuard AppSec Deployment Guide section on AppSec Management. [CP CloudGuard AppSec Admin Guide](https://github.com/CheckPointSW/Infinity-Next/blob/main/contrib/resources/CP_CloudGuard_AppSec_AdminGuide.pdf)
+
+## Installing the Chart 
 
 Download the latest release of the chart here:
 ```bash
@@ -50,12 +58,13 @@ https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments
 Next, install the chart with the chosen release name (e.g. `my-release`), run:
 
 ```bash
-$ helm install my-release cpappsec-1.0.2.tgz --namespace="{your namespace}" --set nanoToken="{your AppSec token string here}" --set appURL="{your appURL}" --set mysvcname="{your app Service Name}" --set mysvcport="{your app service port}" 
+$ helm install my-release cpappsec-1.0.3.tgz --namespace="{your namespace}" --set nanoToken="{your AppSec token string here}" --set appURL="{your appURL}" --set mysvcname="{your app Service Name}" --set mysvcport="{your app service port}" 
 ```
 These are additional optional flags:
 ```bash
---set cpappsec.mysvcport="Your Service Port"
---set cpappsec.myNodePort="The Host Node Port to be assigned"
+--set myNodePort="The Host Node Port to be assigned"
+--set mySSLNodePort="The Host SSL Node Port to be assigned"
+--set platform="{EKS,AKS,GKE, or private}"
 --set image.cpappsecnginxingress.properties.imageRepo="{a different repo}"
 --set image.cpappsecnginxingress.properties.imageTag="{a specific tag/version}"
 --set image.cpappsecnanoagent.properties.imageRepo="{a different repo}"
@@ -75,7 +84,7 @@ Refer to [values.yaml](values.yaml) for the full run-down on defaults. These are
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install my-release checkpoint/cpappsec-1.0.2.tgz --namespace="myns" --set nanoToken="4339fab-..." --set appURL="myapp.mycompany.com" --set mysvcname="myapp" --set mysvcport="8080" 
+$ helm install my-release checkpoint/cpappsec-1.0.3.tgz --namespace="myns" --set nanoToken="4339fab-..." --set appURL="myapp.mycompany.com" --set mysvcname="myapp" --set mysvcport="8080" 
 ```
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 

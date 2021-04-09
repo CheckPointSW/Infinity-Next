@@ -9,7 +9,9 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
 data:
-#  proxy-protocol: "True"
+  {{- if eq .Values.platform "EKS" }}
+  proxy-protocol: "True"
+  {{- end }}
   real-ip-header: "proxy_protocol"
   set-real-ip-from: "0.0.0.0/0"
 # The line "load_module /usr/lib/nginx/modules/ngx_cp_attachment_module.so;" MUST be included as the first
