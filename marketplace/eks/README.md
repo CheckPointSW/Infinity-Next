@@ -1,4 +1,4 @@
-# Check Point CloudGuard AppSec for AKS
+# Check Point CloudGuard AppSec for EKS
 ## Overview
 Check Point CloudGuard AppSec delivers access control, and advanced, multi-layered threat prevention including Web and API protection for mission-critical assets.
 
@@ -30,7 +30,7 @@ The following table lists the configurable parameters of this chart and their de
 
 ## Command line instructions
 
-You can use [Azure Cloud Shell](https://shell.azure.com/#cloudshell/) or a local workstation to follow the steps below.
+You can use [AWS Cloud Shell](https://shell.AWS.com/#cloudshell/) or a local workstation to follow the steps below.
 
 ### Prerequisites
 #### Configure your application in the [Check Point Infinity Next AppSec Portal](https://portal.checkpoint.com) 
@@ -47,22 +47,20 @@ You'll need the following tools in your development environment. If you are usin
 -   [helm](https://helm.sh/)
 
 
-### Provision an Azure Kubernetes Cluster with AKS
+### Provision a Kubernetes Cluster with EKS 
+(You may already have one for your existing K8s Application)
 
-The quickest way to setup a Kubernetes cluster is with `az`. If you don't have `az`, [install it using these instructions](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) or use the Azure Portal Console.
+The quickest way to setup a Kubernetes cluster using the command line is with `eksctl`. 
 
 Follow the steps below to provision a Kubernetes Cluster with AKS. 
 
 ```bash
-az login
-az account set --subscription "SUBSCRIPTION-NAME"
-az group create --name aks-resource-group --location eastus
-az aks create --name aks-cluster --resource-group aks-resource-group --generate-ssh-keys
+eksctl create cluster --name cpappsec --region us-east-1 --with-oidc --ssh-access --ssh-public-key /path-to-your-key --managed
 ```
-The above command creates a new resource group and cluster named `aks-cluster`. Then, install and configure `kubectl` with the credentials to the new AKS cluster, as shown below:
+The above command creates a new cluster named `cpappsec`. Then, install and configure `kubectl` with the credentials to the new EKS cluster, as shown below:
 
 ```bash
-az aks get-credentials --name aks-cluster --resource-group aks-resource-group
+aws eks --region us-east-1 update-kubeconfig --name cpappsec
 ```
 
 #### (Optional) Create a namespace in your Kubernetes cluster
@@ -70,27 +68,14 @@ If you use a different namespace than `default`, or the namespace does not exist
 yet, run the command below to create a new namespace:
 
 ```shell
-kubectl create namespace "$NAMESPACE"
-```
-### Add the Helm repository
-Helm charts are available via the Azure Marketplace public repository.
-
-Create a secret to use when pulling images from the registry. This step is only necessary the first time you deploy a chart on an AKS cluster, and can safely be omitted for subsequent chart deployments on the same cluster.
-
-```bash
-$ kubectl create secret generic emptysecret --from-literal=.dockerconfigjson='{"auths":{"marketplace.azurecr.io":{"Username":"","Password":""}}}' --type=kubernetes.io/dockerconfigjson
+kubectl create namespace {yournamespace}
 ```
 
-#### Add the Azure Marketplace repository:
-
-```bash
-helm repo add azure-marketplace https://marketplace.azurecr.io/helm/v1/repo
-helm search repo azure-marketplace
-```
 ### Install the Application
+Note: EKS REQUIRES the "platform" be specified in the variables.
 
 ```shell
-helm install my-release azure-marketplace/cpappsec --namespace="myns" --set nanoToken="4339fab-..." --set appURL="{your App URL}" --set mysvcname="{your App Name}" --set mysvcport="{your App Service Port}" 
+helm install cpappsec cpappsec-1.0.3.tgz --set nanoToken="{your nanoToken}" --set appURL="{your AppURL}" --set mysvcname="{your App Svc Name}" --set mysvcport="{your app svc port}" --set platform="EKS" 
 ```
 
 ### Open your Application site
@@ -109,9 +94,9 @@ After the Ingress Controller container creation is finished, the Check Point Age
 
 # Uninstall the Application
 
-## Using the Azure Cloud Platform Console
+## Using the AWS Cloud Platform Console
 
-1.  In the Azure Portal, select your Kubernetes Cluster from
+1.  In the AWS Portal, select your Kubernetes Cluster from
     [Kubernetes Services](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
 
 1.  From the list of applications, select "Workloads" from Kubernetes Resources.

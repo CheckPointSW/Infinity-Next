@@ -60,7 +60,7 @@ Next, install the chart with the chosen release name (e.g. `my-release`), run:
 ```bash
 $ helm install my-release cpappsec-1.0.3.tgz --namespace="{your namespace}" --set nanoToken="{your AppSec token string here}" --set appURL="{your appURL}" --set mysvcname="{your app Service Name}" --set mysvcport="{your app service port}" 
 ```
-These are additional optional flags:
+These are additional optional flags: (NOTE: for EKS, you must specify --set platform="EKS")
 ```bash
 --set myNodePort="The Host Node Port to be assigned"
 --set mySSLNodePort="The Host SSL Node Port to be assigned"
