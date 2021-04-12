@@ -4,22 +4,22 @@
 
 replicaCount: 1
 
-#Values for CloudGuard AppSec Nano Agent in Nginx Ingress Controller
-nanoToken: "12345abc-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d649f781"
+#Values for CloudGuard AppSec in Nginx Ingress Controller
+agentToken: "12345abc-a5fa-40b4-9c9a-b8dabde8956d-63f91f9b-d4a8-4bc0-b81a-e472d649f781"
 appURL: "myapp.mycompany.com"
-mysvcname: "myapp"
-mysvcport: "80"
-myNodePort: "30080"
-mySSLNodePort: "30443"
+appSvcName: "myapp"
+appSvcPort: "80"
+lbNodePort: "30080"
+lbSSLNodePort: "30443"
 # Platform can be EKS, AKS, GKE, or private
 platform: "private"
 
 image:
-  cpappsecnginxingress:
+  cpappsecNginxIngress:
     properties:
       imageRepo: checkpoint/infinity-next-nginx-ingress
       imageTag: latest
-  cpappsecnanoagent:
+  cpappsecNanoAgent:
     properties:
      imageRepo: checkpoint/infinity-next-nano-agent
      imageTag: latest
@@ -27,7 +27,7 @@ image:
 imagePullSecrets: []
 
 
-operatorServiceAccount:
+opSvcAcct:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account

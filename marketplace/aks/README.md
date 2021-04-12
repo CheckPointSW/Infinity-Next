@@ -1,3 +1,4 @@
+
 # Check Point CloudGuard AppSec for AKS
 ## Overview
 Check Point CloudGuard AppSec delivers access control, and advanced, multi-layered threat prevention including Web and API protection for mission-critical assets.
@@ -14,17 +15,19 @@ The following table lists the configurable parameters of this chart and their de
 | ---------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------ |
 | `nanoToken`                                           | Check Point AppSec nanoToken from the CloudGuard Portal(required)                             | `034f3d-96093mf-3k43li... `                                          |
 | `appURL`                                           | URL of the application (must resolve to cluster IP address after deployment,required)     | `myapp.mycompany.com`                                          |
-| `mysvcname`                                           | K8s service name of your application(required)     | `myapp`                         |
-| `mysvcport`                                           | K8s listening port of your service(required)     | `8080`                         |
-| `myNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
-| `mySSLNodePort`                                        |  Host Node Port used for SSL inbound ingress)     | `30443`                         |
+| `appSvcName`                                           | K8s service name of your application(required)     | `myapp`                         |
+| `appSvcPort`                                           | K8s listening port of your service(required)     | `8080`                         |
+| `lbNodePort`                                           | Host Node Port used for inbound ingress     | `30080`                         |
+| `lbSSLNodePort`                                        |  Host Node Port used for SSL inbound ingress     | `30443`                         |
 | `platform`                                        |  Deployment Platform (EKS, AKS, GKE, private)     | `private`                         |
-| `image.cpappsecnginxingress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx-ingress`                                              |
-| `image.cpappsecnginxingress.properties.imageTag`                                             | Image Version to use                    | `1.0.2`                                              |
-| `image.cpappsecnanoagent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
-| `image.cpappsecnanoagent.properties.imageTag`                                              | Version to use              | `1.0.2`                                           |
+| `image.cpappsecNginxIngress.properties.imageRepo`                                             | Dockerhub location of the nginx image integrated with Check Point AppSec                     | `checkpoint/infinity-next-nginx-ingress`                                              |
+| `image.cpappsecNginxIngress.properties.imageTag`                                             | Image Version to use                    | `1.0.2`                                              |
+| `image.cpappsecNanoAgent.properties.imageRepo`                                              | Dockerhub location of the Check Point nano agent image              | `checkpoint/infinity-next-nano-agent`                                           |
+| `image.cpappsecNanoAgent.properties.imageTag`                                              | Version to use              | `1.0.2`                                           |
 | `TLS_CERTIFICATE_CRT`                                           | Default TLS Certificate               | `Certificate string`                         |
 | `TLS_CERTIFICATE_KEY`                                           | Default TLS Certificate Key               | `Certificate Key string`                         | 
+
+NOTE: If redeploying on an existing cluster, you may need to change the lbNodePort and lbSSLNodePort because Kubernetes does not always release a node port on a host right away.
 
 # Installation
 
@@ -90,9 +93,18 @@ helm search repo azure-marketplace
 ### Install the Application
 
 ```shell
-helm install my-release azure-marketplace/cpappsec --namespace="myns" --set nanoToken="4339fab-..." --set appURL="{your App URL}" --set mysvcname="{your App Name}" --set mysvcport="{your App Service Port}" 
+helm install my-release azure-marketplace/cpappsec --namespace="myns" --set nanoToken="4339fab-..." --set appURL="{your App URL}" --set appSvcName="{your App Name}" --set appSvcPort="{your App Service Port}" 
 ```
-
+These are additional optional flags: (NOTE: for EKS, you must specify --set platform="EKS")
+```bash
+--set lbNodePort="The Host Node Port to be assigned"
+--set lbSSLNodePort="The Host SSL Node Port to be assigned"
+--set platform="{EKS,AKS,GKE, or private}"
+--set image.cpappsecNginxIngress.properties.imageRepo="{a different repo}"
+--set image.cpappsecNginxIngress.properties.imageTag="{a specific tag/version}"
+--set image.cpappsecNanoAgent.properties.imageRepo="{a different repo}"
+--set image.cpappsecNanoAgent.properties.imageTag="{a specific tag/version}"
+```
 ### Open your Application site
 Get the external IP of your Application site using the following command:
 

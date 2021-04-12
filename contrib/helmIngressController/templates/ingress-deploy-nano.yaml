@@ -20,7 +20,7 @@ spec:
       labels:
         app: nginx-ingress
     spec:
-      serviceAccountName: {{.Values.operatorServiceAccount.name}}
+      serviceAccountName: {{.Values.opSvcAcct.name}}
       containers:
       - args:
         - -nginx-configmaps=$(POD_NAMESPACE)/{{.Release.Name}}-cp-configmap
@@ -36,7 +36,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: "{{.Values.image.cpappsecnginxingress.properties.imageRepo}}:{{ .Values.image.cpappsecnginxingress.properties.imageTag }}"
+        image: "{{.Values.image.cpappsecNginxIngress.properties.imageRepo}}:{{ .Values.image.cpappsecNginxIngress.properties.imageTag }}"
         imagePullPolicy: IfNotPresent
         name: {{.Release.Name}}-cp-nginx-container
         ports:
@@ -51,10 +51,10 @@ spec:
         terminationMessagePolicy: File
       - args:
         - --token
-        - {{ required "CloudGuard AppSec nanoToken required" .Values.nanoToken}}
+        - {{ required "CloudGuard AppSec agentToken required" .Values.agentToken}}
         command:
         - /cp-nano-agent
-        image: "{{.Values.image.cpappsecnanoagent.properties.imageRepo}}:{{.Values.image.cpappsecnanoagent.properties.imageTag}}"
+        image: "{{.Values.image.cpappsecNanoAgent.properties.imageRepo}}:{{.Values.image.cpappsecNanoAgent.properties.imageTag}}"
         imagePullPolicy: IfNotPresent
         name: {{.Release.Name}}-cp-nano-container
         resources: {}

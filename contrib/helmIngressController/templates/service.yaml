@@ -18,12 +18,12 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    nodePort: {{.Values.myNodePort}}
+    nodePort: {{.Values.lbNodePort}}
     protocol: TCP
     name: http
   - port: 443
     targetPort: 443
-    nodePort: {{.Values.mySSLNodePort}}
+    nodePort: {{.Values.lbSSLNodePort}}
     protocol: TCP
     name: https
   selector:
