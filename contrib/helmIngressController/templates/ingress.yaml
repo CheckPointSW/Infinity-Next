@@ -15,5 +15,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: {{.Values.mysvcname}}
-          servicePort: {{.Values.mysvcport}}
+          serviceName: {{.Values.appSvcName}}
+          servicePort: {{.Values.appSvcPort}}

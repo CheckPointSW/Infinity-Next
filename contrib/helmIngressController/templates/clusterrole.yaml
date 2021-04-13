@@ -56,7 +56,7 @@ metadata:
   name: {{.Release.Name}}-cp-binding
 subjects:
 - kind: ServiceAccount
-  name: {{.Values.operatorServiceAccount.name}}
+  name: {{.Values.opSvcAcct.name}}
   namespace: {{.Release.Namespace}}
 roleRef:
   kind: ClusterRole
