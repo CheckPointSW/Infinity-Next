@@ -3,7 +3,7 @@ entries:
   cpappsec:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-04-13T11:35:42.394252192Z"
+    created: "2021-04-13T13:04:18.69931169Z"
     description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web Application and API protection
     digest: a1e46188275a1eba7b7c3adb07d0a30011cf5052c6b28c56a0d060b44c583727
     home: https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments
@@ -17,11 +17,11 @@ entries:
     name: cpappsec
     type: application
     urls:
-    - https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments/cpappsec-1.0.3.tgz
+    - https://raw.githubusercontent.com/CheckPointSW/Infinity-Next/main/deployments/cpappsec-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-04-13T11:35:42.391887747Z"
+    created: "2021-04-13T13:04:18.697782168Z"
     description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web Application and API protection
     digest: e5ce511183befbad9df6152eb3d6bd382ef2def9eb0eb8bddc3aa7d1e2f097c7
     home: https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments
@@ -35,11 +35,11 @@ entries:
     name: cpappsec
     type: application
     urls:
-    - https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments/cpappsec-1.0.2.tgz
+    - https://raw.githubusercontent.com/CheckPointSW/Infinity-Next/main/deployments/cpappsec-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-04-13T11:35:42.389346293Z"
+    created: "2021-04-13T13:04:18.69641523Z"
     description: A Helm chart for the CloudGuard AppSec Ingress Controller for Web Application and API protection
     digest: 6aa87db2f3249aa79188dfcc55caffc992ad09c3f8ba87673a384de190ee970f
     home: https://github.com/CheckPointSW/charts
@@ -53,6 +53,6 @@ entries:
     name: cpappsec
     type: application
     urls:
-    - https://github.com/CheckPointSW/Infinity-Next/tree/main/deployments/cpappsec-0.1.2.tgz
+    - https://raw.githubusercontent.com/CheckPointSW/Infinity-Next/main/deployments/cpappsec-0.1.2.tgz
     version: 0.1.2
-generated: "2021-04-13T11:35:42.386499999Z"
+generated: "2021-04-13T13:04:18.694809324Z"
